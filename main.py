@@ -11,10 +11,15 @@ __status__ = "Debug"
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
-import urllib.request,re,os
-import credentials
-import courselist
-driver = webdriver.Firefox()
+import urllib.request,re,os,sys
+from driver_support import *
+from config import *
+
+#get the available driver
+driver = get_available_driver()
+if driver == "":
+    print("can't find any available driver")
+    sys.exit()
 
 LOGIN_URL = "https://www.alphorm.com/account/login"
 def login(username,password):
@@ -88,7 +93,7 @@ def get_course(url):
         vid_number += 1
 
     print("Finished")
-login(credentials.email,credentials.password)
+login(email,password)
 
-for url in courselist.courses:
+for url in courses:
     get_course(url)
