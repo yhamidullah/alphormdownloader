@@ -47,7 +47,7 @@ def get_course(url):
     #get the lesson list and count for the loop range
     lessons = driver.find_elements_by_class_name("video_plan")
     num_links = len(lessons)
-
+    vid_number = 1
     #loop over the lessons
     for i in range(num_links):
         #click on a lesson
@@ -80,10 +80,12 @@ def get_course(url):
         #create chapter's folder if not exists
         if not os.path.isdir(course_name + "/" +chapter):
             os.mkdir(course_name + "/" +chapter)
+            vid_number = 1
         
         #download and save to folder
         print("Downloading : ",chapter,"/",lesson,".mp4")
-        urllib.request.urlretrieve(video_link, course_name+"/"+chapter+"/"+lesson+".mp4")
+        urllib.request.urlretrieve(video_link, course_name+"/"+chapter+"/"+str(vid_number)+"-"+lesson+".mp4")
+        vid_number += 1
 
     print("Finished")
 login(credentials.email,credentials.password)
