@@ -57,6 +57,7 @@ def get_course(url):
     for i in range(num_links):
         #click on a lesson
         lessons[i].click()
+        webdriver.ActionChains(driver).move_to_element(lessons[i]).click(lessons[i]).perform()
 
         #waiting util we can find the play button
         #element = WebDriverWait(driver, 10).until(lambda x:    x.find_element_by_class_name('jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback'))
