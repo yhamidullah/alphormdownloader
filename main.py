@@ -9,6 +9,7 @@ __status__ = "Debug"
 
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 import urllib.request,re,os,sys
@@ -55,6 +56,8 @@ def get_course(url):
     vid_number = 1
     #loop over the lessons
     for i in range(num_links):
+        #implicit wait to let the page load its full features
+        driver.manage().timeouts().implicitlywait(15 TimeUnit.seconds)
         #click on a lesson
         lessons[i].click()
 
