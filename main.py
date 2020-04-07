@@ -35,7 +35,8 @@ def login(username,password):
 
     #find and click the login button
     driver.find_element_by_class_name("btn-connect").click()
-
+def clean_text(text):
+    return text.replace("/","_").replace("\"","").replace(":","_")
 
 def get_course(url):
     #load the course page
@@ -61,7 +62,7 @@ def get_course(url):
         #implicit wait to let the page load its full features
         #waiting util we can find the play button
         try:
-            myElem = WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.CLASS_NAME, 'menu_point')))
+            myElem = WebDriverWait(driver, 100).until(EC.presence_of_element_located((By.CLASS_NAME, 'video_plan')))
         except TimeoutException:
             print ("Loading took too much time!")
         
@@ -85,11 +86,9 @@ def get_course(url):
         
         #cleaning special chars
         chapter = re.sub("[!@#$%^&*()[]{};:,./<>?\|`~-=_+]", " ", chapter)
-        chapter = chapter.replace("/","_")
-        chapter = chapter.replace("\"","")
+        chapter = clean_text(chapter)
         lesson = re.sub("[!@#$%^&*()[]{};:,./<>?\|`~-=_+]", " ", lesson)
-        lesson = lesson.replace("/","_")
-        lesson = lesson.replace("\"","")
+        lesson = clean_text(lesson)
 
         #create chapter's folder if not exists
         if not os.path.isdir(course_name + "/" +chapter):
