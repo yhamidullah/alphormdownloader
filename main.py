@@ -79,8 +79,10 @@ def get_course(url):
         #cleaning special chars
         chapter = re.sub("[!@#$%^&*()[]{};:,./<>?\|`~-=_+]", " ", chapter)
         chapter = chapter.replace("/","_")
+        chapter = chapter.replace("\"","")
         lesson = re.sub("[!@#$%^&*()[]{};:,./<>?\|`~-=_+]", " ", lesson)
         lesson = lesson.replace("/","_")
+        lesson = lesson.replace("\"","")
 
         #create chapter's folder if not exists
         if not os.path.isdir(course_name + "/" +chapter):
