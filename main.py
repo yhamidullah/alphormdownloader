@@ -11,6 +11,8 @@ __status__ = "Debug"
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import urllib.request,re,os,sys
 from driver_support import *
@@ -57,13 +59,15 @@ def get_course(url):
     #loop over the lessons
     for i in range(num_links):
         #implicit wait to let the page load its full features
-        driver.manage().timeouts().implicitlywait(15 TimeUnit.seconds)
+        #waiting util we can find the play button
+        try:
+            myElem = WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.CLASS_NAME, 'menu_point')))
+        except TimeoutException:
+            print ("Loading took too much time!")
+        
         #click on a lesson
         lessons[i].click()
 
-        #waiting util we can find the play button
-        #element = WebDriverWait(driver, 10).until(lambda x:    x.find_element_by_class_name('jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback'))
-        
         #play the selected lesson
         #driver.find_element_by_class_name("jw-icon jw-icon-inline jw-button-color jw-reset jw-icon-playback").click()
         
